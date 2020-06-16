@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<rosparam file="$(find robocol_rover_description)/config/robocol_rover_control.yaml" command="load"/>
+	<node name="robot_state_publisher_robocol_rover" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+		<param name="publish_frequency" type="double" value="5.0" />
+		<remap from="/joint_states" to="/robocol_rover/joint_states" />
+	</node>
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" args="--namespace=/robocol_rover
+			joint_state_controller
+			front_wheel_L_joint_velocity_controller
+			middle_wheel_L_joint_velocity_controller
+			back_wheel_L_joint_velocity_controller
+			front_wheel_R_joint_velocity_controller
+			middle_wheel_R_joint_velocity_controller
+			back_wheel_R_joint_velocity_controller">
+	</node>
+</launch>

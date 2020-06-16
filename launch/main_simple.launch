@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<include file="$(find robocol_rover_description)/launch/mars_curiosity_simple_world.launch"/>
+	<include file="$(find robocol_rover_description)/launch/robocol_rover_start.launch"/>
+	<node output="screen" pkg="controlers" type="node_joystick_traction.py" name="node_joystick_traction"/>
+</launch>

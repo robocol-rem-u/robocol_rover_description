@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="chassis_body" params="">
+		<!-- Used for fixing robot to Gazebo 'chassis' -->
+		<link name="base_footprint" />
+		<joint name="base_joint" type="fixed">
+			<parent link="base_footprint"/>
+			<child link="chassis"/>
+		</joint>
+		<link name='chassis'>
+			<collision>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/chassis.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/chassis.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</visual>
+			<inertial>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<mass value="${chassisMass}"/>
+<!--
+				<inertia ixx="${979569.812500 *inertia_scale}" ixy="${5281.165039*inertia_scale}" ixz="${15227.231445*inertia_scale}" iyy="${565751.750000*inertia_scale}" iyz="${24327.925781*inertia_scale}" izz="${1444612*inertia_scale}"/>
+-->
+				<xacro:box_inertia
+					m="${chassisMass}"
+					x="${chassisLength}"
+					y="${chassisWidth}"
+					z="${chassisHeight}"
+				/>
+			</inertial>
+		</link>
+	</xacro:macro>
+</robot>

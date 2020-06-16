@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<!-- Constants -->
+	<xacro:property name="PI" value="3.1415926535897931"/>	
+	<!-- Scaling -->
+	<xacro:property name="scale_XYZ" value="0.01"/>
+	<xacro:property name="inertia_scale" value="0.0000001"/>
+	<!-- Camera -->
+	<xacro:property name="camera_link" value="0.05" /> <!-- Size of square 'camera' box -->
+	<!-- Chassis properties -->
+	<xacro:property name="chassisMass" value="10"/>
+	<xacro:property name="chassisWidth" value="0.4327"/> <!--0.8-->
+	<xacro:property name="chassisLength" value="0.72"/> <!--0.5-->
+	<xacro:property name="chassisHeight" value="0.174"/> <!--0.2-->
+	<!-- Wheel Trees -->
+	<xacro:property name="TreeMass" value="${0.1/2.0}"/>
+	<xacro:property name="TreeParts" value="2.0"/>
+	<!-- Axis -->
+	<xacro:property name="axisMass" value="0.2"/>
+	<xacro:property name="axisHeight" value="0.05"/>
+	<xacro:property name="axisLength" value="0.2"/>
+	<xacro:property name="axisWidth" value="0.05"/>
+	<!-- Left Rocker -->
+	<xacro:property name="left_rocker_Mass" value="1.5"/>
+	<xacro:property name="left_rocker_X" value="0.2794"/>
+	<xacro:property name="left_rocker_Y" value="0.5"/>
+	<xacro:property name="left_rocker_Z" value="0.5"/>
+	<xacro:property name="left_rocker_limit" value="0.4"/>
+	<!-- Right Rocker -->
+	<xacro:property name="right_rocker_Mass" value="1.5"/>
+	<xacro:property name="right_rocker_X" value="0.2794"/>
+	<xacro:property name="right_rocker_Y" value="0.5"/>
+	<xacro:property name="right_rocker_Z" value="0.5"/>
+	<xacro:property name="right_rocker_limit" value="0.4"/>
+	<!-- Left Boogie -->
+	<xacro:property name="left_boogie_Mass" value="1"/>
+	<xacro:property name="left_boogie_X" value="0.2794"/>
+	<xacro:property name="left_boogie_Y" value="0.4"/>
+	<xacro:property name="left_boogie_Z" value="0.4"/>
+	<xacro:property name="left_boogie_limit" value="0.4"/>
+	<!-- Right Boogie -->
+	<xacro:property name="right_boogie_Mass" value="1"/>
+	<xacro:property name="right_boogie_X" value="0.2794"/>
+	<xacro:property name="right_boogie_Y" value="0.4"/>
+	<xacro:property name="right_boogie_Z" value="0.4"/>
+	<xacro:property name="right_boogie_limit" value="0.4"/>
+	<!-- Suspension -->
+	<xacro:property name="suspension_effort" value="10.0"/>
+	<xacro:property name="suspension_speed" value="10.0"/>
+	<xacro:property name="suspension_damping" value="0.5"/>
+	<xacro:property name="suspension_friction" value="5.0"/>
+	<!-- Wheels properties -->
+	<xacro:property name="wheelWidth" value="0.08096"/>
+	<xacro:property name="wheelRadius" value="0.1347"/>
+	<xacro:property name="wheelMass" value="3.5"/>
+	-->
+</robot>

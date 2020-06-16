@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="left_wheel_tree" params="">
+		<!-- LEFT ROCKER-DIFFERENTIAL BAR -->
+		<link name='left_rocker_bar'>
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/chassis_rocker.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/chassis_rocker.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</visual>
+			<inertial>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<mass value="${axisMass}"/>
+				<xacro:box_inertia m="${axisMass}" x="${axisWidth}" y="${axisLength}" z="${axisHeight}" />
+			</inertial>
+		</link>
+		<joint name="left_axis_joint" type="fixed">
+			<parent link="chassis"/>
+			<child link="left_rocker_bar"/>
+			<origin xyz="0.15 0 0" rpy="0 0 0"/>
+		</joint>
+		<!-- LEFT ROCKER -->
+		<link name='left_rocker'>
+			<collision>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/rocker_left.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/rocker_left.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</visual>
+			<inertial>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<mass value="${left_rocker_Mass}"/>
+				<xacro:box_inertia m="${left_rocker_Mass}" x="${left_rocker_X}" y="${left_rocker_Y}" z="${left_rocker_Z}" />
+<!--
+				<inertia ixx="${345781.656250*inertia_scale}" ixy="${1879.242188*inertia_scale}" ixz="${-236.460098*inertia_scale}" iyy="${55383.601562*inertia_scale}" iyz="${-236.460098*inertia_scale}" izz="${332204.406250*inertia_scale}"/>
+-->
+			</inertial>
+		</link>
+		<joint name="suspension_left_rocker_joint" type="revolute">
+			<parent link="left_rocker_bar"/>
+			<child link="left_rocker"/>
+			<origin xyz="0.12 0 0" rpy="-${PI/16-0.02} 0 0"/>
+			<limit lower="${-left_rocker_limit}" upper="${left_rocker_limit}" effort="${suspension_effort}" velocity="${suspension_speed}"/>
+			<axis xyz="1 0 0"/>
+			<joint_properties damping="${suspension_damping}" friction="${suspension_friction}"/>
+		</joint>
+		<transmission name="suspension_left_rocker_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="suspension_left_rocker_joint">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="suspension_left_rocker_Motor">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		<!-- LEFT BOOGIE -->
+		<link name='left_boogie'>
+			<collision>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/boogie_left.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<geometry>
+					<mesh filename="package://robocol_rover_description/meshes/boogie_left.dae" scale="${scale_XYZ} ${scale_XYZ} ${scale_XYZ}"/>
+				</geometry>
+			</visual>
+			<inertial>
+				<origin xyz="0 0 0"	rpy="0 0 0"/>
+				<mass value="${left_boogie_Mass}"/>
+				<xacro:box_inertia m="${left_boogie_Mass}" x="${left_boogie_X}" y="${left_boogie_Y}" z="${left_boogie_Z}" />
+<!--
+				<inertia ixx="${348303.906250*inertia_scale}" ixy="${416.777649*inertia_scale}" ixz="${1527.486450*inertia_scale}" iyy="${298092*inertia_scale}" iyz="${-125525.867188*inertia_scale}" izz="${93000.507812*inertia_scale}"/>
+-->
+			</inertial>
+		</link>
+		
+		<joint name="suspension_left_boogie_joint" type="revolute">
+			<parent link="left_rocker"/>
+			<child link="left_boogie"/>
+			<origin xyz="0.035 -0.21 -0.1075" rpy="-0.13 0 ${PI}"/>
+			<limit lower="${-left_boogie_limit}" upper="${left_boogie_limit}" effort="${suspension_effort}" velocity="${suspension_speed}"/>
+			<axis xyz="1 0 0"/>
+			<joint_properties damping="${suspension_damping}" friction="${suspension_friction}"/> 
+		</joint>
+		<transmission name="suspension_left_boogie_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="suspension_left_boogie_joint">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="suspension_left_boogie_Motor">
+				<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+		
+		<!-- FRONT WHEEL -->
+		<link name='left_boogie_to_front_left_wheel'>
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="1" />
+				<inertia ixx="2.61666666667e-05" ixy="0.0" ixz="0.0" iyy="2.61666666667e-05" iyz="0.0" izz="3.6e-05"/>
+			</inertial>
+			<collision>
+				<origin rpy="0 1.57 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.12" length="0.02"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin rpy="0 1.57 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.045" length="0.02"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="left_boogie_to_front_wheel_L_joint" type="fixed">
+			<parent link="left_boogie"/>
+			<child link="left_boogie_to_front_left_wheel"/>
+			<origin xyz="-0.11 0.168 -0.192" rpy="0 0 0"/>
+		</joint>
+		<xacro:wheel wheel_name="wheel_front_left" wheel_conector_name="left_boogie_to_front_left_wheel" tY="0" />
+		<!-- MIDDLE WHEEL -->
+		<link name='left_boogie_to_middle_left_wheel'>
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="1" />
+				<inertia ixx="2.61666666667e-05" ixy="0.0" ixz="0.0" iyy="2.61666666667e-05" iyz="0.0" izz="3.6e-05"/>
+			</inertial>
+			<collision>
+				<origin rpy="0 1.57 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.12" length="0.02"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin rpy="0 1.57 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.045" length="0.02"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="left_boogie_to_middle_wheel_L_joint" type="fixed">
+			<parent link="left_boogie"/>
+			<child link="left_boogie_to_middle_left_wheel"/>
+			<origin xyz="-0.11 -0.188 -0.175" rpy="0 0 0"/>
+		</joint>
+		<xacro:wheel wheel_name="wheel_middle_left" wheel_conector_name="left_boogie_to_middle_left_wheel" tY="0" />
+		<!-- REAR WHEEL -->
+		<link name='left_rocker_to_rear_left_wheel'>
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="1" />
+				<inertia ixx="2.61666666667e-05" ixy="0.0" ixz="0.0" iyy="2.61666666667e-05" iyz="0.0" izz="3.6e-05"/>
+			</inertial>
+			<collision>
+				<origin rpy="0 1.57 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.12" length="0.02"/>
+				</geometry>
+			</collision>
+			<visual>
+				<origin rpy="0 1.57 0" xyz="0 0 0"/>
+				<geometry>
+					<cylinder radius="0.045" length="0.02"/>
+				</geometry>
+			</visual>
+		</link>
+		<joint name="left_rocker_to_rear_wheel_L_joint" type="fixed">
+			<parent link="left_rocker"/>
+			<child link="left_rocker_to_rear_left_wheel"/>
+			<origin xyz="0.109 0.343 -0.196" rpy="0 0 0"/>
+		</joint>
+		<xacro:wheel wheel_name="wheel_rear_left" wheel_conector_name="left_rocker_to_rear_left_wheel" tY="0" />
+	</xacro:macro>
+</robot>

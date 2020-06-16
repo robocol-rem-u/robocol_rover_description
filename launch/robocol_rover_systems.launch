@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<node name="Robocol_Rover_node"
+		pkg="robocol_rover_description"
+		type="6_wheels.py"
+		respawn="false"
+		output="screen"
+		args=""
+	/>
+</launch>

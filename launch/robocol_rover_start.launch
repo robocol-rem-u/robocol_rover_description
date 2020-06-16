@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<include file="$(find robocol_rover_description)/launch/robocol_rover_spawn.launch"/>
+	<include file="$(find robocol_rover_description)/launch/robocol_rover_control.launch"/>
+	<include file="$(find robocol_rover_description)/launch/robocol_rover_systems.launch"/> 
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find robocol_rover_description)/rviz/robocol_rover.rviz" />
+</launch>
